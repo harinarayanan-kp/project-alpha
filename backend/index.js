@@ -10,3 +10,8 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+mongoose.connect('mongodb+srv://teamdaash:123daash123@backenddb.2grsm.mongodb.net/')
+.then(() => {
+  console.log("DB connected")
+})
