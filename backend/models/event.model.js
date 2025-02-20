@@ -16,7 +16,6 @@ const EventSchema = mongoose.Schema(
     description: {
       type: String,
     },
-    club_name: { type: String, required: [true, "Please enter club name. "] },
     venue: { type: String, required: [true, "Please enter venue. "] },
     socialmedia_link: { type: String },
     reg_fee: { type: Number },
