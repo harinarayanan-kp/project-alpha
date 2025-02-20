@@ -21,6 +21,11 @@ const AdminSchema = mongoose.Schema(
         //         "Password must contain at least one uppercase letter, one number, and one special character.",
         // },
         },
+        club: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "club",
+            required: [true, "Admin must be part of a club"]
+        }
     },
     {
         timestamps: true

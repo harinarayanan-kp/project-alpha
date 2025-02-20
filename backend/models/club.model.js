@@ -13,5 +13,5 @@ const ClubSchema = mongoose.Schema(
     }
 )
 
-const Club= mongoose.model("Club", ClubSchema);
+const Club = mongoose.model("Club", ClubSchema);
 module.exports = Club;
