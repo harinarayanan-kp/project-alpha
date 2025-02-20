@@ -7,7 +7,7 @@ const EventTile = ({ event }) => (
       <p className="text-gray-600 mb-1">{new Date(event.date).toLocaleDateString()}</p>
       <p className="text-gray-600 mb-1">{event.time}</p>
       <p className="text-gray-600 mb-1">{event.venue}</p>
-      <p className="text-gray-600 mb-1">Hosted by: {event.club}</p>
+      <p className="text-gray-600 mb-1">Hosted by: {event.club_name}</p>
       {event.reg_link && (
         <a href={event.reg_link} className="text-blue-500 hover:underline block mt-2" target="_blank" rel="noopener noreferrer">
           Register Here
