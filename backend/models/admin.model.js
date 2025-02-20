@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const AdminSchema = mongoose.Schema(
     {
         email: {
-            type: email,
+            type: String,
             required: [true, "Please enter email."],
             unique: true, 
             trim: true,
@@ -11,17 +11,15 @@ const AdminSchema = mongoose.Schema(
             match: [/^\S+@\S+\.\S+$/, "Please enter a valid email address."]
         },
         password: {
-           type: password,
+           type: String,
            required: [true, "Please enter password."],
            minlength: [8, "Password must be at least 8 characters long."],
-           maxlength: [20, "Password cannot exceed 20 characters."], 
-           validate: {
-             validator: function (value) {
-               return /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
-             },
-             message:
-               "Password must contain at least one uppercase letter, one number, and one special character.",
-           },
+        //    validate: {
+        //     validator: (value) => 
+        //         /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value),
+        //     message:
+        //         "Password must contain at least one uppercase letter, one number, and one special character.",
+        // },
         },
     },
     {
