@@ -1,22 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const eventController = require("../controllers/event.controller");
+const authMiddleware = require("../middleware/Authmiddleware");
 
-router.post("/login", eventController.login);
+router.post("/", authMiddleware, eventController.createEvent);
+router.get("/", eventController.getAllEvents);
+router.get("/:id", eventController.getEventById);
+router.put("/:id", authMiddleware, eventController.updateEvent);
+router.delete("/:id", authMiddleware, eventController.deleteEvent);
 
-
-router.post("/events",  eventController.createEvent);
-router.get("/events", eventController.getAllEvents);
-router.get("/events/:id", eventController.getEventById);
-router.put("/events/:id",eventController.updateEvent);
-router.delete("/events/:id",eventController.deleteEvent);
-
-
-
-// router.post("/events", eventController.authenticateAdmin, eventController.createEvent);
+// router.post("/events", authMiddleware, eventController.createEvent);
 // router.get("/events", eventController.getAllEvents);
 // router.get("/events/:id", eventController.getEventById);
-// router.put("/events/:id", eventController.authenticateAdmin, eventController.updateEvent);
-// router.delete("/events/:id", eventController.authenticateAdmin, eventController.deleteEvent);
+// router.put("/events/:id", authMiddleware, eventController.updateEvent);
+// router.delete("/events/:id", authMiddleware, eventController.deleteEvent);
 
 module.exports = router;

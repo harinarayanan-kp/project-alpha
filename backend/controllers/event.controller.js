@@ -1,15 +1,51 @@
 const Event = require("../models/event.model");
+const Club = require("../models/club.model");
 const Admin = require("../models/admin.model");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
-const SECRET_KEY = "your_secret_key"; // Replace with a secure secret
+const mongoose = require("mongoose");
 
 const createEvent = async (req, res) => {
   try {
-    const newEvent = new Event(req.body);
-    await newEvent.save();
-    res.status(201).json({ message: "Event created successfully", event: newEvent });
+    const {
+      ename,
+      date,
+      time,
+      club_name,
+      venue,
+      socialmedia_link,
+      reg_fee,
+      reg_link,
+      contact,
+      club,
+    } = req.body;
+    const clubId = new mongoose.Types.ObjectId(club);
+    const existingClub = await Club.findById(clubId);
+    if (!existingClub) {
+      return res.status(404).json({ message: "Club not found" });
+    }
+
+    const token = req.cookies.Authorization;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const adminId = new mongoose.Types.ObjectId(decoded.sub);
+    const newEvent = await Event.create({
+      ename,
+      date,
+      time,
+      club_name,
+      venue,
+      socialmedia_link,
+      reg_fee,
+      reg_link,
+      contact,
+      club,
+      admin: adminId,
+    });
+    // const newEvent = new Event(req.body);
+    // await newEvent.save();
+    // const
+    res
+      .status(201)
+      .json({ message: "Event created successfully", event: newEvent });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -38,7 +74,9 @@ const getEventById = async (req, res) => {
 
 const updateEvent = async (req, res) => {
   try {
-    const event = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!event) {
       return res.status(404).json({ message: "Event not found" });
     }
@@ -61,8 +99,6 @@ const deleteEvent = async (req, res) => {
 };
 
 module.exports = {
-  login,
-  authenticateAdmin,
   createEvent,
   getAllEvents,
   getEventById,

@@ -5,6 +5,7 @@ const port = 5001
 const cookieParser= require("cookie-parser");
 const adminRoute = require('./routes/admin.route.js')
 const clubRoute = require('./routes/club.route.js')
+const eventRoute= require('./routes/event.route.js')
 require("dotenv").config(); 
 
 
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 })
 
 app.use("/api/admin",adminRoute);
+app.use("/api/events",eventRoute);
 app.use("/api/club",clubRoute);
 
 // used to generate JWT superkey
