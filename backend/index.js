@@ -7,7 +7,7 @@ require("dotenv").config();
 app.use(express.json())
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello Worl!')
 })
 
 // used to generate JWT superkey
