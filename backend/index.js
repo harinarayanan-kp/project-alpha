@@ -2,10 +2,14 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 const port = 5001
-require("dotenv").config(); 
+const cookieParser= require("cookie-parser");
 const adminRoute = require('./routes/admin.route.js')
+require("dotenv").config(); 
+
+
 const cors=require("cors");
 
+app.use(cookieParser());
 app.use(express.json())
 app.use(cors({
   origin: true,

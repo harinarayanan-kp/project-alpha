@@ -9,7 +9,7 @@ const Authmiddleware = async (req,res,next) => {
         if (Date.now()>decoded.exp){
             return res.status(401).json({message:"token expired"})
         }
-        const admin = await Admin.findbyId(decoded.sub)
+        const admin = await Admin.findById(decoded.sub)
         if (!admin){
             return res.status(401).json({message:"Invalid id"})
         }
@@ -19,6 +19,4 @@ const Authmiddleware = async (req,res,next) => {
         res.status(500).json({ message: err.message})
     }
 }
-module.exports = {
-    Authmiddleware
-}
+module.exports = Authmiddleware
