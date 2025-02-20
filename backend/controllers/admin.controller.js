@@ -1,13 +1,20 @@
 const Admin = require('../models/admin.model.js')
+const Club = require('../models/club.model.js')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const mongoose = require("mongoose");
 
 const signUp = async (req, res) => {
     try{
-        const {email, password} = req.body
+        const {email, password, club} = req.body
         const hashedpwd =  bcrypt.hashSync(password, 8)
+        const clubId = new mongoose.Types.ObjectId(club);
+        const existingClub = await Club.findById(clubId);
+        if (!existingClub) {
+            return res.status(404).json({ message: "Club not found" });
+        }
 
-        await Admin.create({email,password:hashedpwd})
+        await Admin.create({email,password:hashedpwd,club:clubId})
 
         res.status(201).json({message: "Admin sign up successful"})
     }catch(err){
