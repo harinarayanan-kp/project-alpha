@@ -26,6 +26,12 @@ const createEvent = async (req, res) => {
     const token = req.cookies.Authorization;
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const adminId = new mongoose.Types.ObjectId(decoded.sub);
+
+    let imagePath = null;
+    if (req.file) {
+      imagePath = req.file.path; 
+    }
+
     const newEvent = await Event.create({
       ename,
       date,
@@ -37,10 +43,8 @@ const createEvent = async (req, res) => {
       contact,
       club,
       admin: adminId,
+      image: imagePath,
     });
-    // const newEvent = new Event(req.body);
-    // await newEvent.save();
-    // const
     res
       .status(201)
       .json({ message: "Event created successfully", event: newEvent });

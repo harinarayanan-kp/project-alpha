@@ -38,7 +38,8 @@ const EventSchema = mongoose.Schema(
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "admin",
                 required: [true, "Event must have an admin"]
-            }
+            },
+    image: { type: String }, 
 
   },
   {
